@@ -1,4 +1,4 @@
-package xbytes
+package xconvertor
 
 import (
 	"bytes"
@@ -11,7 +11,7 @@ func Bytes2String(b []byte) string {
 	return *(*string)(unsafe.Pointer(&b))
 }
 
-//字节转换成整形
+// Bytes2Int 字节转换成整形
 func Bytes2Int(b []byte) int {
 	bytesBuffer := bytes.NewBuffer(b)
 
@@ -19,4 +19,9 @@ func Bytes2Int(b []byte) int {
 	binary.Read(bytesBuffer, binary.BigEndian, &x)
 
 	return int(x)
+}
+
+// BytesToInt64 byte 转 int64
+func BytesToInt64(buf []byte) int64 {
+	return int64(binary.BigEndian.Uint64(buf))
 }
