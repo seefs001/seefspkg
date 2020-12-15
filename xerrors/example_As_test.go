@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"os"
 
-	"golang.org/x/xerrors"
+	"github.com/seefs001/seefslib-go/xerrors"
 )
 
 func ExampleAs() {

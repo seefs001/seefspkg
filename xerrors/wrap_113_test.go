@@ -10,7 +10,7 @@ import (
 	"errors"
 	"testing"
 
-	"golang.org/x/xerrors"
+	"github.com/seefs001/seefslib-go/xerrors"
 )
 
 func TestErrorsIs(t *testing.T) {

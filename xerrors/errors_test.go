@@ -6,10 +6,9 @@ package xerrors_test
 
 import (
 	"fmt"
+	"github.com/seefs001/seefslib-go/xerrors"
 	"regexp"
 	"testing"
-
-	"golang.org/x/xerrors"
 )
 
 func TestNewEqual(t *testing.T) {
