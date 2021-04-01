@@ -8,7 +8,10 @@
     - Float64ToString
     - StructToMap StructToJSONStr
 - xdate GetCurrntTimeStr GetCurrntTime
-- xfile GetFileSize GetFileExt CheckFileExist CheckFilePermission IsNotExistMkDir MkDir OpenFile
+- xfile 
+    - GetFileSize GetFileExt CheckFileExist 
+    - CheckFilePermission IsNotExistMkDir MkDir OpenFile
+    - IsBinary IsImg IsDir CopyFile CopyDir
 - xrandom RandStringRunes GenRandomCode RandInt
 - xstring Len(utf8) Substr JoinInts SplitInts
 - xtcp CreateTCPListener CreateTCPConn
