@@ -21,7 +21,7 @@ func Int64ToBytes(i int64) []byte {
 
 // IntToInt64 int to int64
 func IntToInt64(value int) int64 {
-	i, _ := strconv.ParseInt(string(value), 10, 64)
+	i, _ := strconv.ParseInt(string(rune(value)), 10, 64)
 	return i
 }
 

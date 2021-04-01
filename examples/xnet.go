@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/seefs001/seefslib/snet"
+	"github.com/seefs001/seefslib/xnet"
 )
 
 func indexHandler(w http.ResponseWriter, req *http.Request) {
@@ -15,16 +15,16 @@ func indexHandler(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-	engine := snet.New()
-	//http.HandleFunc("/",indexHandler)
-	engine.Get("/", func(c *snet.Context) error {
-		return c.JSON(200, &snet.Map{
+	engine := xnet.New()
+	// http.HandleFunc("/",indexHandler)
+	engine.Get("/", func(c *xnet.Context) error {
+		return c.JSON(200, &xnet.Map{
 			"/":    "1",
 			"path": c.Path(),
 		})
 	})
-	engine.Get("/test", func(c *snet.Context) error {
-		return c.JSON(200, &snet.Map{
+	engine.Get("/test", func(c *xnet.Context) error {
+		return c.JSON(200, &xnet.Map{
 			"/":    "1",
 			"path": c.Path(),
 		})

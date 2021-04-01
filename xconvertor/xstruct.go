@@ -22,5 +22,4 @@ func StructToJSONStr(e interface{}) (string, error) {
 		return string(b), err
 	}
 	return "", nil
-
 }

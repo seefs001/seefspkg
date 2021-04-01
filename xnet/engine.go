@@ -1,4 +1,4 @@
-package snet
+package xnet
 
 import (
 	"context"

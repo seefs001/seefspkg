@@ -41,7 +41,7 @@ func Substr(str string, start int, length ...int) string {
 	if len(length) > 0 {
 		ll := length[0]
 		if ll < 0 {
-			sl = sl + ll
+			sl += ll
 		} else {
 			sl = ll + start
 		}
@@ -55,18 +55,18 @@ func Pad(raw string, length int, padStr string, padType int) string {
 	if l <= 0 {
 		return raw
 	}
-	if padType == PadRight {
+	switch {
+	case padType == PadRight:
 		raw = fmt.Sprintf("%s%s", raw, strings.Repeat(padStr, l))
-	} else if padType == PadLeft {
+	case padType == PadLeft:
 		raw = fmt.Sprintf("%s%s", strings.Repeat(padStr, l), raw)
-	} else {
+	default:
 		left := 0
 		right := 0
 		if l > 1 {
 			left = l / 2
 			right = (l / 2) + (l % 2)
 		}
-
 		raw = fmt.Sprintf("%s%s%s", strings.Repeat(padStr, left), raw, strings.Repeat(padStr, right))
 	}
 	return raw
