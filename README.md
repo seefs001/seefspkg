@@ -16,3 +16,4 @@
 - xstring Len(utf8) Substr JoinInts SplitInts
 - xtcp CreateTCPListener CreateTCPConn
 - xnet xnet.New()
+- xzip Zip UnZip
