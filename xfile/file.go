@@ -38,12 +38,13 @@ func CheckFilePermission(src string) bool {
 
 // IsNotExistMkDir 不存在新建目录
 func IsNotExistMkDir(src string) error {
-	if exist := CheckFileExist(src); !exist {
-		if err := MkDir(src); err != nil {
+
+	err := os.Mkdir(src, os.ModePerm)
+	if err != nil {
+		if !os.IsExist(err) {
 			return err
 		}
 	}
-
 	return nil
 }
 
