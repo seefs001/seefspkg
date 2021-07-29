@@ -1,3 +1,3 @@
-module github.com/seefs001/seefslib-go
+module github.com/seefs001/seefspkg
 
-go 1.16
+go 1.17

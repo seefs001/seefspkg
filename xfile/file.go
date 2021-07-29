@@ -1,6 +1,8 @@
 package xfile
 
 import (
+	"crypto/sha512"
+	"encoding/hex"
 	"io"
 	"io/ioutil"
 	"mime/multipart"
@@ -176,4 +178,36 @@ func CopyDir(source string, dest string) (err error) {
 	}
 
 	return nil
+}
+
+// GetFileMd5 获取文件的md5码
+func GetFileMd5(file *multipart.FileHeader) (string, error) {
+	open, err := file.Open()
+	if err != nil {
+		return "", err
+	}
+	defer open.Close()
+
+	h := sha512.New()
+	if _, err := io.Copy(h, open); err != nil {
+		return "", err
+	}
+	return hex.EncodeToString(h.Sum(nil)), nil
+}
+
+func SaveFile(file *multipart.FileHeader, dst string) error {
+	src, err := file.Open()
+	if err != nil {
+		return err
+	}
+	defer src.Close()
+
+	out, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	_, err = io.Copy(out, src)
+	return err
 }

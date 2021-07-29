@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/seefs001/seefslib/xnet"
+	"github.com/seefs001/seefspkg/xnet"
 )
 
 func indexHandler(w http.ResponseWriter, req *http.Request) {
