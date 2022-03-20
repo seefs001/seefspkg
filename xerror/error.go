@@ -9,17 +9,17 @@ type SeefsError struct {
 	Inner      error
 	Message    string
 	StackTrace string
-	Misc       map[string]interface{}
+	Misc       map[string]any
 }
 
-// WrapError error包装
-func WrapError(err error, messagef string, msgArgs ...interface{}) SeefsError {
+// WrapError error with message
+func WrapError(err error, messagef string, msgArgs ...any) SeefsError {
 	return SeefsError{
 		Inner:      err,
 		Message:    fmt.Sprintf(messagef, msgArgs...),
 		StackTrace: string(debug.Stack()),
-		// 堆栈跟踪的hash或可能有助于诊断错误的其他上下文信息
-		Misc: make(map[string]interface{}),
+		// stack message
+		Misc: make(map[string]any),
 	}
 }
 

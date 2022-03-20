@@ -11,17 +11,20 @@ func Bytes2String(b []byte) string {
 	return *(*string)(unsafe.Pointer(&b))
 }
 
-// Bytes2Int 字节转换成整形
-func Bytes2Int(b []byte) int {
+// Bytes2Int bytes to int
+func Bytes2Int(b []byte) (int, error) {
 	bytesBuffer := bytes.NewBuffer(b)
 
 	var x int32
-	binary.Read(bytesBuffer, binary.BigEndian, &x)
+	err := binary.Read(bytesBuffer, binary.BigEndian, &x)
+	if err != nil {
+		return 0, err
+	}
 
-	return int(x)
+	return int(x), nil
 }
 
-// BytesToInt64 byte 转 int64
+// BytesToInt64 byte to int64
 func BytesToInt64(buf []byte) int64 {
 	return int64(binary.BigEndian.Uint64(buf))
 }

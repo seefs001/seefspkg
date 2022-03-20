@@ -2,13 +2,13 @@ package xconvertor
 
 import "encoding/json"
 
-// StructToMap struct转map
-func StructToMap(data interface{}) (map[string]interface{}, error) {
+// StructToMap struct to map
+func StructToMap(data any) (map[string]any, error) {
 	dataBytes, err := json.Marshal(data)
 	if err != nil {
 		return nil, err
 	}
-	mapData := make(map[string]interface{})
+	mapData := make(map[string]any)
 	err = json.Unmarshal(dataBytes, &mapData)
 	if err != nil {
 		return nil, err
@@ -16,8 +16,8 @@ func StructToMap(data interface{}) (map[string]interface{}, error) {
 	return mapData, nil
 }
 
-// StructToJSONStr struct转json str
-func StructToJSONStr(e interface{}) (string, error) {
+// StructToJSONStr struct to json str
+func StructToJSONStr(e any) (string, error) {
 	if b, err := json.Marshal(e); err == nil {
 		return string(b), err
 	}

@@ -12,33 +12,33 @@ import (
 	"strings"
 )
 
-// GetFileSize 获取文件大小
+// GetFileSize get file size
 func GetFileSize(f multipart.File) (int, error) {
 	content, err := ioutil.ReadAll(f)
 
 	return len(content), err
 }
 
-// GetFileExt 获取文件后缀
+// GetFileExt get file ext
 func GetFileExt(fileName string) string {
 	return path.Ext(fileName)
 }
 
-// CheckFileExist 检查文件是否存在
+// CheckFileExist check file exist
 func CheckFileExist(src string) bool {
 	_, err := os.Stat(src)
 
 	return os.IsNotExist(err)
 }
 
-// CheckFilePermission 检查是否有权限
+// CheckFilePermission check file permission
 func CheckFilePermission(src string) bool {
 	_, err := os.Stat(src)
 
 	return os.IsPermission(err)
 }
 
-// IsNotExistMkDir 不存在新建目录
+// IsNotExistMkDir is not exist then create dir
 func IsNotExistMkDir(src string) error {
 
 	err := os.Mkdir(src, os.ModePerm)
@@ -50,7 +50,7 @@ func IsNotExistMkDir(src string) error {
 	return nil
 }
 
-// MkDir 新建目录
+// MkDir make dir
 func MkDir(src string) error {
 	err := os.MkdirAll(src, os.ModePerm)
 	if err != nil {
@@ -60,7 +60,7 @@ func MkDir(src string) error {
 	return nil
 }
 
-// OpenFile 打开文件
+// OpenFile open file
 func OpenFile(name string, flag int, perm os.FileMode) (*os.File, error) {
 	f, err := os.OpenFile(name, flag, perm)
 	if err != nil {
@@ -70,7 +70,7 @@ func OpenFile(name string, flag int, perm os.FileMode) (*os.File, error) {
 	return f, nil
 }
 
-// IsBinary 是否为Binary
+// IsBinary is binary
 func IsBinary(content string) bool {
 	for _, b := range content {
 		if 0 == b {
@@ -81,7 +81,7 @@ func IsBinary(content string) bool {
 	return false
 }
 
-// IsImg 是否为img
+// IsImg is image
 func IsImg(extension string) bool {
 	ext := strings.ToLower(extension)
 
@@ -93,7 +93,7 @@ func IsImg(extension string) bool {
 	}
 }
 
-// IsDir 是否为Dir
+// IsDir is dir
 func IsDir(path string) bool {
 	fio, err := os.Lstat(path)
 	if os.IsNotExist(err) {
@@ -107,21 +107,31 @@ func IsDir(path string) bool {
 	return fio.IsDir()
 }
 
-// CopyFile CopyFile
+// CopyFile copy file
 func CopyFile(source string, dest string) (err error) {
 	sourcefile, err := os.Open(source)
 	if err != nil {
 		return err
 	}
 
-	defer sourcefile.Close()
+	defer func(sourcefile *os.File) {
+		err := sourcefile.Close()
+		if err != nil {
+			return
+		}
+	}(sourcefile)
 
 	destfile, err := os.Create(dest)
 	if err != nil {
 		return err
 	}
 
-	defer destfile.Close()
+	defer func(destfile *os.File) {
+		err := destfile.Close()
+		if err != nil {
+			return
+		}
+	}(destfile)
 
 	_, err = io.Copy(destfile, sourcefile)
 	if err == nil {
@@ -134,7 +144,7 @@ func CopyFile(source string, dest string) (err error) {
 	return nil
 }
 
-// CopyDir 复制目录
+// CopyDir copy dir
 func CopyDir(source string, dest string) (err error) {
 	sourceinfo, err := os.Stat(source)
 	if err != nil {
@@ -152,7 +162,12 @@ func CopyDir(source string, dest string) (err error) {
 		return err
 	}
 
-	defer directory.Close()
+	defer func(directory *os.File) {
+		err := directory.Close()
+		if err != nil {
+			return
+		}
+	}(directory)
 
 	objects, err := directory.Readdir(-1)
 	if err != nil {
@@ -180,13 +195,18 @@ func CopyDir(source string, dest string) (err error) {
 	return nil
 }
 
-// GetFileMd5 获取文件的md5码
+// GetFileMd5 get file md5
 func GetFileMd5(file *multipart.FileHeader) (string, error) {
 	open, err := file.Open()
 	if err != nil {
 		return "", err
 	}
-	defer open.Close()
+	defer func(open multipart.File) {
+		err := open.Close()
+		if err != nil {
+			return
+		}
+	}(open)
 
 	h := sha512.New()
 	if _, err := io.Copy(h, open); err != nil {
@@ -200,13 +220,23 @@ func SaveFile(file *multipart.FileHeader, dst string) error {
 	if err != nil {
 		return err
 	}
-	defer src.Close()
+	defer func(src multipart.File) {
+		err := src.Close()
+		if err != nil {
+			return
+		}
+	}(src)
 
 	out, err := os.Create(dst)
 	if err != nil {
 		return err
 	}
-	defer out.Close()
+	defer func(out *os.File) {
+		err := out.Close()
+		if err != nil {
+			return
+		}
+	}(out)
 
 	_, err = io.Copy(out, src)
 	return err

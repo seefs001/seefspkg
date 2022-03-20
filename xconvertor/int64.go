@@ -7,12 +7,12 @@ import (
 	"strconv"
 )
 
-// Int64ToString int64转string
+// Int64ToString int64 to string
 func Int64ToString(e int64) string {
 	return strconv.FormatInt(e, 10)
 }
 
-// Int64ToBytes ...
+// Int64ToBytes int64 to bytes
 func Int64ToBytes(i int64) []byte {
 	var buf = make([]byte, 8)
 	binary.BigEndian.PutUint64(buf, uint64(i))
@@ -26,8 +26,8 @@ func IntToInt64(value int) int64 {
 }
 
 // ToInt64 convert any numeric value to int64
-// 任意类型转int64
-func ToInt64(value interface{}) (d int64, err error) {
+// any to int64
+func ToInt64(value any) (d int64, err error) {
 	val := reflect.ValueOf(value)
 	switch value.(type) {
 	case int, int8, int16, int32, int64:

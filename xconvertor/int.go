@@ -6,16 +6,19 @@ import (
 	"strconv"
 )
 
-// IntToString int转string
+// IntToString int to string
 func IntToString(e int) string {
 	return strconv.Itoa(e)
 }
 
-// Int2Bytes 整形转换成字节
-func Int2Bytes(n int) []byte {
+// Int2Bytes int to bytes
+func Int2Bytes(n int) ([]byte, error) {
 	x := int32(n)
 
 	bytesBuffer := bytes.NewBuffer([]byte{})
-	binary.Write(bytesBuffer, binary.BigEndian, x)
-	return bytesBuffer.Bytes()
+	err := binary.Write(bytesBuffer, binary.BigEndian, x)
+	if err != nil {
+		return nil, err
+	}
+	return bytesBuffer.Bytes(), nil
 }

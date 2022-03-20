@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// 用掩码进行替换
+// returns a random string of length n
 const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 const (
 	letterIdxBits = 6                    // 6 bits to represent a letter index
@@ -33,7 +33,7 @@ func RandStringBytesMaskImpr(n int) string {
 	return string(b)
 }
 
-// RandStringRunes 返回随机字符串
+// RandStringRunes returns a random string of length n
 func RandStringRunes(n int) string {
 	var letterRunes = []rune("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
@@ -45,7 +45,7 @@ func RandStringRunes(n int) string {
 	return string(b)
 }
 
-// GenRandomCode 生成随机验证码
+// GenRandomCode generates a random code of length n
 func GenRandomCode(width int) string {
 	numeric := [10]byte{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
 	r := len(numeric)
